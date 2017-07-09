@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+ 
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="com.test.subject.ui.SubjectEditor"
+            icon="index.gif"
+            default="true"
+            contributorClass="com.test.subject.actions.DiagramActionBarContributor"
+            name="SubjectEditor"
+            id="com.test.subject.ui.SubjectEditor"
+            extensions="subject"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Subject"
+            id="com.test.subject"/>
+      <wizard
+            icon="index.gif"
+            class="com.test.subject.ui.DiagramCreationWizard"
+            category="com.test.subject"
+            name="Subject"
+            id="com.test.subject.ui.DiagramCreationWizard">
+         <description/>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+</plugin>
