@@ -1,0 +1,19 @@
+1. 打开git bash
+	ssh-keygen -t rsa -C "your.email@example.com" 一路回车即表示不设置密码
+	在user目录下C:\Users\yourname\.ssh下生成了id_rsa 和 id_rsa.pub
+	将id_rsa.pub的内容添加到https://github.com/settings/keys的ssh keys中
+	
+2. 测试ssh
+	git bash中命令ssh -T git@github.com
+	# Attempts to ssh to GitHub
+	如果显示Hi username! You've successfully authenticated, but GitHub does not provide shell access.
+	代表成功了！
+
+3. Working with SSH key passphrases
+	ssh-keygen -p
+	# Start the SSH key creation process
+
+4. 设置ssh key后push还要输入用户名和密码?
+	因为当前repository使用的是https而不是ssh，需要更新一下origin。
+	git remote rm origin
+	git remote add origin git@github.com:Username/Your_Repo_Name.git
