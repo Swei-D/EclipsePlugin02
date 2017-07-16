@@ -53,28 +53,24 @@ public class TreeItemFigure extends Shape{
 		label.addMouseMotionListener(new MouseMotionListener() {
 			public void mouseDragged(MouseEvent me) {
 				// TODO Auto-generated method stub
-
+				System.err.println("mouseDragged");
 			}
 
 			public void mouseEntered(MouseEvent me) {
 
 				label.setForegroundColor(ColorConstants.orange);
-
 			}
 
 			public void mouseExited(MouseEvent me) {
 				label.setForegroundColor(ColorConstants.black);
-
 			}
 
 			public void mouseHover(MouseEvent me) {
 				// TODO Auto-generated method stub
-
 			}
 
 			public void mouseMoved(MouseEvent me) {
 				// TODO Auto-generated method stub
-
 			}
 		});
 	}
@@ -135,6 +131,9 @@ public class TreeItemFigure extends Shape{
 
 	protected void outlineShape(Graphics graphics) {
 		graphics.pushState();
+		/**
+		 * What are you doing ????  nothing???
+		 */
 		PointList plist = new PointList();
 		Rectangle tmp = this.getBounds();
 

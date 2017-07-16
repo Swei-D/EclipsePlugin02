@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:ui="http://xml.ms.com/ns/aoe/presto/gui"
+	elementFormDefault="qualified">
+	
+	<xs:import namespace="http://xml.ms.com/ns/aoe/presto/gui" schemaLocation="UIConfig.xsd"/>
+	
+	<xs:element name="Job">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="JobConfigType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:complexType name="JobConfigType">
+		<xs:sequence>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+			<xs:element name="InstanceKeys" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Key" type="Key" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Imports" type="Imports" minOccurs="0"/>
+			<xs:element name="ConfigLoader" type="DynamicMethod" minOccurs="0"/>
+			<xs:element name="Context" type="Context" minOccurs="0"/>
+			<xs:element name="ScriptSettings" type="ScriptSettings" minOccurs="0"/>
+			<xs:element name="TaskGroup" type="TaskGroup" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="TaskGroup">
+		<xs:sequence>
+			<xs:element name="Title" type="xs:string" minOccurs="0" />
+			<xs:element name="Desctription" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="Task" type="Task" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="Task">
+		<xs:complexContent>
+			<xs:extension base="ActionContainerConfig">
+				<xs:sequence>
+					<xs:element name="SupplementalConfig" type="SupplementalConfig"
+						minOccurs="0" />
+				</xs:sequence>
+				<xs:attribute name="name" type="xs:string" use="required" />
+				<xs:attribute name="dependsOn" type="xs:string" />
+				<xs:attribute name="optional" type="xs:boolean"
+					default="false" />
+				<xs:anyAttribute processContents="skip"
+					namespace="http://xml.ms.com/ns/aoe/presto/entitlement" />
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:compelexType name="TaskType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="Manual"/>
+		</xs:restriction>
+	</xs:compelexType>
+	
+	<xs:complexType name="Parallel">
+		<xs:sequence>
+			<xs:element name="Pipe" type="ActionContainerConfig"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="Action">
+		<xs:complexContent>
+			<xs:extension base="DynamicMethod">
+				<xs:sequence>
+					<xs:element ref="ui:ControlProperty" minOccurs="0" maxOccurs="unbonded"/>
+					<xs:element name="DisplayData" type="DisplayData" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="DisplayType" type="DisplayType" minOccurs="0" maxOccurs="unbounded"/>
+					<xs:element name="Output" type="Output" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+				<xs:attribute name="manualAction" type="xs:boolean" default="false"/>
+				<xs:anyAttribute processContents="skip" namespace="http://xml.ms.com/ns/aoe/presto/gui"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="For">
+		<xs:complexContent>
+			<xs:extension base="ActionContainerConfig">
+				<xs:attribute name="input" type="xs:string" use="required"/>
+				<xs:attribute nam="output" type="xs:string" use="required"/>
+				<xs:attribute name="indexer" type="xs:string"/>
+			</xs:extension>		
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType>
+		<xs:complexContent>
+			<xs:extension base="Scripttable">
+				<xs:sequence>
+					<xs:element name="Case" type="Case" maxOccurs="unbounded"/>
+					<xs:element name="Default" type="ActionContainerConfig" minOccurs="0"/>
+				</xs:sequence>
+				<xs:attribute name="input" type="xs:string"/>
+			</xs:extension>		
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="Case">
+		<xs:complexContent>
+			<xs:extension base="ActionContainerConfig">
+				<xs:attribute name="value" type="xs:string" use="required"/>
+				<xs:attribute name="splitter" type="xs:string" default=","/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="Output">
+		<xs:complexContent>
+			<xs:extension base="Scriptable">
+				<xs:attribute name="name" type="xs:string"/>
+				<xs:attribute name="ref" type="xs:string" use="required"/>
+				<xs:attribute name="calculated" type="xs:boolean" default="false"/>
+				<xs:attribute name="templateName" type="xs:string" />
+				<xs:anyAttribute processContents="skip"/>
+			</xs:extension>
+		</xs:complexContent>		
+	</xs:complexType>
+	
+	<xs:complexType name="DisplayData">
+		<xs:complexContent>
+			<xs:extension base="Scriptable">
+				<xs:attribute name="name" type="xs:string"/>
+				<xs:attribute name="ref" type="xs:string" use="required"/>
+				<xs:attribute name="calculated" type="xs:boolean" default="false"/>
+				<xs:attribute name="templateName" type="xs:string"/>
+				<xs:anyAttribute processContents="skip"/>
+			</xs:extension>
+		</xs:complexContent>	
+	</xs:complexType>
+	
+	<xs:complexType name="DisplayFile">
+		<xs:complexContent>
+			<xs:extension base="Scriptable">
+				<xs:attribute name="name" type="xs:string"/>
+				<xs:attribute name="ref" type="xs:string" use="required"/>
+				<xs:attribute name="calculated" type="xs:boolean" default="false"/>
+				<xs:attribute name="templateName" type="xs:string"/>
+				<xs:anyAttribute processContents="skip"/>
+			</xs:extension>		
+		</xs:complexContent>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="Input">
+		<xs:complexContent>
+			<xs:extension base="Scriptable">
+				<xs:choice>
+					<xs:sequence>
+						<xs:element name="Input" type="Input" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:element name="Value" type="xs:string" minOccurs="0"/>
+				</xs:choice>
+				<xs:attribute name="name" type="xs:string"/>
+				<xs:attribute name="templateName" type="xs:string"/>
+				<xs:attribute name="value" type="xs:string"/>
+				<xs:attribute name="ref" type="xs:string"/>
+				<xs:attribute name="optional" type="xs:boolena" default="false"/>
+				<xs:attribute name="type" type="InputType" default="Simple"/>
+				<xs:attribute name="valueSeparator" type="xs:string" defualt=",|;"/>
+				<xs:attribute name="keySeparator" type="xs:string" default="="/>
+				<xs:attribute name="const" type="xs:string"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	
+	<xs:complexType name="InputType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Simple"/>
+			<xs:enumeration value="Map"/>
+			<xs:enumeration value="List"/>
+		</xs:restriction>
+	</xs:complexType>
+	
+	<xs:complexType name="Scriptable">
+		<xs:sequence>
+			<xs:element name="Script" type="xs:string" minOccurs="0"/>
+		</xs:sequence>	
+		<xs:attribute name="script" type="xs:string"/>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="SupplementalConfig">
+		<xs:sequence>
+			<xs:any processContents="skip" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="DynamicMethod">
+		<xs:sequecne>
+			<xs:element name="Input" type="Input" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="SupplementalConfig" type="SupplementalConfig" minOccurs="0"/>
+		</xs:sequecne>
+		<xs:attribute name="type" type="xs:string"/>
+		<xs:attribute name="funName" type="xs:string" use="required"/>
+		<xs:attribute name="ref" type="xs:string"/>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="ActionContainerConfig">
+		<xs:sequence>
+			<xs:element name="Title" type="xs:string" minOccurs="0"/>
+			<xs:element name="Description" type="xs:string" minOccurs="0"/>
+			<xs:group ref="ActionContainerEntries" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:group name="ActionContainerEntries">
+		<xs:choices>
+			<xs:element name="Action" type="Action"/>
+			<xs:element naem="Parallel" type="Parallel"/>
+			<xs:element name="For" type="For"/>
+			<xs:element name="Switch" type="Switch"/>
+			<xs:elemetn name="Template" type="Template"/>
+		</xs:choices>
+	</xs:group>
+	
+	<xs:complexType name="Imports">
+		<xs:sequence>
+			<xs:element name="Contant" type="ContantImport" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Template" type="TemplateImport" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:complexType name="ConstantImport">
+		<xs:attribute name="path" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="TemplateImport">
+		<xs:attribute name="path" type="xs:string"/>
+	</xs:complexType>
+	
+	<xs:complexType name="Tempate">
+		<xs:sequence>
+			<xs:element name="Input" type="Input" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Output" type="Output" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="Var" type="TempateVariable" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="name" type="xs:string"/>
+	</xs:complexType>
+	
+	
+	<xs:complexType name="TempateVariable">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="name" type="xs:string"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+
+</xs:schema>

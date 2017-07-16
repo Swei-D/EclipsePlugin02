@@ -28,5 +28,6 @@ public class DiagramActionBarContributor extends ActionBarContributor {
     public void contributeToToolBar(IToolBarManager toolBarManager) {
         toolBarManager.add(getAction(ActionFactory.UNDO.getId()));
         toolBarManager.add(getAction(ActionFactory.REDO.getId()));
+        toolBarManager.add(getAction(ActionFactory.DELETE.getId()));
     }
 }

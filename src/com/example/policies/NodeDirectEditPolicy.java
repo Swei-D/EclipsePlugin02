@@ -18,5 +18,6 @@ public class NodeDirectEditPolicy extends DirectEditPolicy{
 	protected void showCurrentEditValue(DirectEditRequest request) {
 		String value = (String) request.getCellEditor().getValue();
 		((StepFigure) getHostFigure()).setName(value);
+		System.out.println("showCurrentEditValue  :  " + value);
 	}
 }

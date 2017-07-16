@@ -35,8 +35,7 @@ public class SubTransModelFigure extends Figure {
 		setLayoutManager(layout);
 		setBorder(new LineBorder(new Color(null,211,213,220)));
 		setOpaque(true);
-		name.setIcon(IconFactory.
-				getImageDescriptor(ImageConstants.FRAME_LOGO).createImage());
+		name.setIcon(IconFactory.getImageDescriptor(ImageConstants.FRAME_LOGO).createImage());
 		name.setIconAlignment(Label.LEFT);
 		Font f = new Font(GefExamplePlugin.getActiveWorkbenchShell().getDisplay(),"courier", 10, 1); 
 		name.setFont(f);
@@ -61,8 +60,7 @@ public class SubTransModelFigure extends Figure {
 	}
 
 	public void setIcon(String icon){
-		name.setIcon(IconFactory.
-				getImageDescriptor(icon).createImage());
+		name.setIcon(IconFactory.getImageDescriptor(icon).createImage());
 	}
 
 	public void paint(Graphics graphics){

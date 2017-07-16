@@ -8,8 +8,10 @@ import java.util.Stack;
 
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.ui.views.properties.IPropertyDescriptor;
 
 import com.example.image.ImageConstants;
+import com.example.tools.STextPropertyDescriptor;
 
 /**
  * TODO 
@@ -122,6 +124,7 @@ public class TreeItemModel extends FNode {
 
 	public void setExpand(int expand) {
 		this.expand = expand;
+//		System.err.println("setExpand(int expand)" + expand + " name = " + this.getName() + "　show size = " + this.getShowIncomingConnections().size());
 
 	}
 
@@ -275,15 +278,40 @@ public class TreeItemModel extends FNode {
 			return this.getIncomingConnections();
 		}
 		List l = new ArrayList();
+		/**
+		 * setExpand(int expand)ITEM_COLLAPSED = 2;　name = table / database show size = 2
+		 * setExpand(int expand)ITEM_EXPAND = 1;　name = table / database show size = 0
+		 * 有点奇怪 this.expand != ITEM_COLLAPSED [Assume this is a TYPE_TABLE and it's vsb]
+		 * this.expand != ITEM_COLLAPSED 应该为 ==
+		 */
 		if(!this.isVsb() || ((this.type != TreeItemModel.TYPE_COLUMN)&& this.expand != ITEM_COLLAPSED)){
 			return Collections.EMPTY_LIST;
 		}
+		/**
+		 * 奇怪，非收缩时，怎么是这样呢？应该为==
+		 */
 		if(this.expand != ITEM_COLLAPSED){
 			return(this.getIncomingConnections());
 		}else{
 			for (Iterator iter = this.getChildren().iterator(); iter.hasNext();) {
 				TreeItemModel child = (TreeItemModel) iter.next();
-				l.addAll(child.getAllIncomings());
+				l.addAll(child.getAllIncomings()); // 即使这里也不合理，不应该是getShowInComingConnections吗？
+			}
+		}
+		
+		
+		if(!this.isVsb() || ((this.type != TreeItemModel.TYPE_COLUMN)&& this.expand != ITEM_COLLAPSED)){
+			return Collections.EMPTY_LIST;
+		}
+		/**
+		 * 奇怪，非收缩时，怎么是这样呢？应该为==
+		 */
+		if(this.expand != ITEM_COLLAPSED){
+			return(this.getIncomingConnections());
+		}else{
+			for (Iterator iter = this.getChildren().iterator(); iter.hasNext();) {
+				TreeItemModel child = (TreeItemModel) iter.next();
+				l.addAll(child.getAllIncomings()); // 即使这里也不合理，不应该是getShowInComingConnections吗？
 			}
 		}
 
@@ -445,6 +473,14 @@ public class TreeItemModel extends FNode {
 	}
 
 	/***********************************************/
+	
+	protected IPropertyDescriptor[] descriptors = new IPropertyDescriptor[] {
+			new STextPropertyDescriptor(PROP_NAME, "name")};
+
+	public IPropertyDescriptor[] getPropertyDescriptors() {
+		return descriptors;
+	}
+	
 	// Abstract methods from IPropertySource
 	public Object getPropertyValue(Object id) {
 		if (PROP_NAME.equals(id))
