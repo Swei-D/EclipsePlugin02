@@ -53,7 +53,16 @@ This slide lists the support actions of this eclipse plugin.
 This plugin supports several dialogs: if we are trying to open an abstract job, we may receive an error. if we are trying to open a jump configuration file without a corresponding xds file in the same directory, we may receice an error with detailed information too. And if we are trying to save the modified jump configuration file, we may receive a question dialog to confirm this operation.
 
 # 12
-And next is demo time
+To begin with, let’s open one jump configuration file with jump flow designer.
+Firstly, let’s demonstrate the expand/collapse action on figures. When the task figure is expanded, we may see its sub-trees or sub-figures.
+Secondly, let’s demonstrate the drag and move actions of the views.
+Thirdly, let’s demonstrate how to format the layout. If we want to re-layout the viewer, we may just double click the header of figure.
+And then, let’s demonstrate the zoom in/out part. If we want to see the connections more clearly or in a global view, we may just zoom out the whole viewer.
+Then, let’s demonstrate the action of add/delete connections or figures. 
+And redo/undo action.
+And then, let’s demonstrate the editor part. For example, if we want to modify the properties of task figure, we may just show the property part, and add something to the description property, and then we just press “Enter” button to make this changes take effect.
+Finally, how the viewer interacts with outline and property part. Please look carefully at the outline part first, when we expand the task of filterPositions in taskgroup2, we may notice the taskgroup2 in the outline part will be expanded too. And if we chose one of the sub-element in the viewer part, the corresponding element in the outline part will be choose too.
+For now, we may notice the enrichProductInfos only depends on filterPositions, and if we add a new connection from getRTPData to enrichProductInfos, we may notice there is new dependency in the dependsOn attribute of enrichProductInfos. And we may dynamically delete the connection too.
 
 # 13
 Are there anyone have questions.
